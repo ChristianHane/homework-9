@@ -1,11 +1,16 @@
-let Word = require('./word.js');
-let inquirer = require('inquirer');
+// function setMaxListeners() { require('cluster') };
+// setMaxListeners(1);
 
+const Word = require('./word.js');
+const inquirer = require('inquirer');
+
+let guessedLetters = [];
 const words = ['happy halloween', 'star wars', 'jedi knight', 'peter pan', 'window', 'book', 'table', 'plane', 'space', 'solar system'];  
 let randomNumber;
 let word;
 
 function createNewGame() {
+  guessedLetters = [];
   randomNumber = Math.floor(Math.random() * words.length);
   word = new Word(words[randomNumber]);
   console.log();
@@ -27,18 +32,12 @@ function prompt() {
       }
     ])
     .then(function(answers) {
-      console.log();
-      word.check(answers.letter.toUpperCase());
-      console.log('WORD:');
-      word.checkWord();
-      displayResponse(answers);
+      checkRepeatLetter(answers);
     })
     .catch(function(err) {
       console.log(err);
     })
 }
-
-
 
 function welcome() {
   console.log();
@@ -55,8 +54,6 @@ function welcome() {
   console.log();
   createNewGame();
 }
-
-welcome();
 
 function displayResponse(answers) {
   if (word.displayArray.join('') === word.wordArray.join('')) {
@@ -91,3 +88,29 @@ function displayResponse(answers) {
     prompt();
   }
 }
+
+function checkRepeatLetter(answers) {
+  let isRepeat = false;
+  for (let i = 0; i < guessedLetters.length; i++) {
+    if (answers.letter.toUpperCase() === guessedLetters[i]) {
+      isRepeat = true;
+    }
+  }
+  if (isRepeat) { 
+    console.log();
+    console.log("YOU'VE ALREADY GUESSED THE LETTER " + answers.letter.toUpperCase());
+    console.log();        
+    console.log('----------------------------------------------------------------------------');    
+    prompt();
+  } else {
+    guessedLetters.push(answers.letter.toUpperCase());    
+    console.log();
+    word.check(answers.letter.toUpperCase());
+    console.log('WORD:');
+    word.checkWord();
+    displayResponse(answers);    
+  }
+}
+
+
+welcome();
