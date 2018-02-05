@@ -18,15 +18,13 @@ module.exports = class Word {
     console.log(this.displayArray.join(' '));
   }
   check(guess) {
-    let corIncor = false;
+    let cor;
     this.letterArray.forEach(function(element) {
       element.checkGuess(guess);
       if (guess === element.letter) {
-        corIncor = true;
+        cor = true;
       }
     })
-    if (corIncor) {
-      return true;
-    }
+    return cor;
   }
 }

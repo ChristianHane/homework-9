@@ -13,9 +13,12 @@ module.exports = class Letter {
     }
   }
   checkGuess(letterGuess) {
+    let corInc;
     if (this.letter === letterGuess) {
       this.guessed = true;
+      corInc = true;
     }
+    return corInc;
   }
 }
 

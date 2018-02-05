@@ -71,18 +71,18 @@ function displayResponse(answers) {
     console.log('YOU LOSE!!!');
     console.log();
     console.log('NEXT WORD!!');
-    losses--;
+    losses++;
     createNewGame();
-  } else if (word.check(answers.letter)) {
+  } else if (word.check(answers.letter.toUpperCase())) {
     console.log();
-    console.log('CORRECT!!');
+    console.log('\x1b[5m%s\x1b[0m', 'CORRECT!!');
     console.log();      
     console.log('----------------------------------------------------------------------------');
     word.guessesRemaining--;      
     prompt();
   } else {
     console.log();
-    console.log('INCORRECT!!');
+    console.log('\x1b[5m%s\x1b[0m', 'INCORRECT!!');
     console.log();      
     console.log('----------------------------------------------------------------------------');
     word.guessesRemaining--;  
@@ -100,7 +100,7 @@ function checkRepeatLetter(answers) {
   if (isRepeat) { 
     console.log('----------------------------------------------------------------------------');                
     console.log();
-    console.log("YOU'VE ALREADY GUESSED THE LETTER " + answers.letter.toUpperCase());
+    console.log('\x1b[41m%s\x1b[0m', "YOU'VE ALREADY GUESSED THE LETTER " + answers.letter.toUpperCase());
     console.log();        
     console.log('----------------------------------------------------------------------------');    
     prompt();
