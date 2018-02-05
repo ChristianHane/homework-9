@@ -1,4 +1,5 @@
-var Letter = require('./letter.js');
+const Letter = require('./letter.js');
+const cfonts = require('cfonts');
 
 module.exports = class Word {
   constructor(word) {

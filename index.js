@@ -1,10 +1,12 @@
 const Word = require('./word.js');
 const inquirer = require('inquirer');
+const colors = require('colors');
+const cfonts = require('cfonts');
 
 let guessedLetters = [];
 let wins = 0;
 let losses = 0;
-const words = ['happy halloween', 'star wars', 'jedi knight', 'peter pan', 'window', 'book', 'table', 'plane', 'space', 'solar system'];  
+const words = ['star wars', 'jedi knight', 'peter pan', 'window', 'book', 'table', 'plane', 'space', 'solar system'];  
 let randomNumber;
 let word;
 
@@ -42,14 +44,10 @@ function welcome() {
   console.log();
   console.log();
   console.log();
-  console.log();
-  console.log();
-  console.log();
-  console.log('WELCOME TO HANGMAN! ARE YOU READY?! LETS PLAY!!');
-  console.log();
-  console.log();
-  console.log();
-  console.log();
+  cfonts.say('Hangman!', {    
+    align: 'center',
+    space: false        
+  });
   console.log();
   createNewGame();
 }
@@ -59,7 +57,7 @@ function displayResponse(answers) {
     console.log()    
     console.log('----------------------------------------------------------------------------');
     console.log()
-    console.log('YOU WIN!!!');
+    console.log('\x1b[5m\x1b[32m%s\x1b[0m', 'YOU WIN!!!'.bold);
     console.log();
     console.log('NEXT WORD!!');
     wins++;
@@ -68,21 +66,21 @@ function displayResponse(answers) {
     console.log()    
     console.log('----------------------------------------------------------------------------');
     console.log()
-    console.log('YOU LOSE!!!');
+    console.log('\x1b[5m\x1b[31m%s\x1b[0m', 'YOU LOSE!!!'.bold);
     console.log();
     console.log('NEXT WORD!!');
     losses++;
     createNewGame();
   } else if (word.check(answers.letter.toUpperCase())) {
     console.log();
-    console.log('\x1b[5m%s\x1b[0m', 'CORRECT!!');
+    console.log('\x1b[32m%s\x1b[0m', 'CORRECT!!'.bold);
     console.log();      
     console.log('----------------------------------------------------------------------------');
     word.guessesRemaining--;      
     prompt();
   } else {
     console.log();
-    console.log('\x1b[5m%s\x1b[0m', 'INCORRECT!!');
+    console.log('\x1b[31m%s\x1b[0m', 'INCORRECT!!');
     console.log();      
     console.log('----------------------------------------------------------------------------');
     word.guessesRemaining--;  
@@ -119,6 +117,7 @@ function checkResponse(answers) {
     console.log('----------------------------------------------------------------------------');            
     console.log();
     console.log('YOUR STATS: ');
+    console.log();
     console.log('WINS: ' + wins);
     console.log('LOSSES: ' + losses);
     console.log();

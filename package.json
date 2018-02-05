@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/ChristianHane/homework-9#readme",
   "dependencies": {
+    "cfonts": "^1.1.3",
+    "colors": "^1.1.2",
     "inquirer": "^5.0.1"
   }
 }
