@@ -1,10 +1,9 @@
-// function setMaxListeners() { require('cluster') };
-// setMaxListeners(1);
-
 const Word = require('./word.js');
 const inquirer = require('inquirer');
 
 let guessedLetters = [];
+let wins = 0;
+let losses = 0;
 const words = ['happy halloween', 'star wars', 'jedi knight', 'peter pan', 'window', 'book', 'table', 'plane', 'space', 'solar system'];  
 let randomNumber;
 let word;
@@ -32,7 +31,7 @@ function prompt() {
       }
     ])
     .then(function(answers) {
-      checkRepeatLetter(answers);
+      checkResponse(answers);
     })
     .catch(function(err) {
       console.log(err);
@@ -63,6 +62,7 @@ function displayResponse(answers) {
     console.log('YOU WIN!!!');
     console.log();
     console.log('NEXT WORD!!');
+    wins++;
     createNewGame();
   } else if (word.guessesRemaining === 1) {
     console.log()    
@@ -71,6 +71,7 @@ function displayResponse(answers) {
     console.log('YOU LOSE!!!');
     console.log();
     console.log('NEXT WORD!!');
+    losses--;
     createNewGame();
   } else if (word.check(answers.letter)) {
     console.log();
@@ -97,6 +98,7 @@ function checkRepeatLetter(answers) {
     }
   }
   if (isRepeat) { 
+    console.log('----------------------------------------------------------------------------');                
     console.log();
     console.log("YOU'VE ALREADY GUESSED THE LETTER " + answers.letter.toUpperCase());
     console.log();        
@@ -112,5 +114,25 @@ function checkRepeatLetter(answers) {
   }
 }
 
+function checkResponse(answers) {
+  if (answers.letter === 'stats') {
+    console.log('----------------------------------------------------------------------------');            
+    console.log();
+    console.log('YOUR STATS: ');
+    console.log('WINS: ' + wins);
+    console.log('LOSSES: ' + losses);
+    console.log();
+    console.log('----------------------------------------------------------------------------');        
+    prompt();      
+  } else if (answers.letter.length > 1) {
+    console.log();
+    console.log('PLEASE INPUT ONLY ONE LETTER');
+    console.log();
+    console.log('----------------------------------------------------------------------------');    
+    prompt();
+  } else {
+    checkRepeatLetter(answers);
+  }
+}
 
 welcome();
